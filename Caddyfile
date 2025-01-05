@@ -1,10 +1,14 @@
 # global options
 {
-	admin off
-	persist_config off
-	auto_https off
+	admin off # theres no need for the admin api in railway's environment
+	persist_config off # storage isn't persistent anyway
+	auto_https off # railway handles https for us, this could in some cases cause issues if left enabled
+	# runtime logs
 	log {
-		output stdout
+		output discard
+	}
+	servers {
+		trusted_proxies static private_ranges # trust railway's proxy
 	}
 }
 
@@ -36,17 +40,17 @@
 	}
 }
 
+# site block, listens on the $PORT environment variable, automatically assigned by railway
 :{$PORT} {
-	trusted_proxies private_ranges
-	
 	import cors {$ORIGIN_0}
 	import cors {$ORIGIN_1}
 	import cors {$ORIGIN_2}
 	import cors {$ORIGIN_3}
 	import cors {$ORIGIN_4}
 
-	reverse_proxy /* localhost:9000 {
+	reverse_proxy /* http://{$LISTMONK_app__address} {
 		header_up Host {upstream_hostport}
+
 		header_down Upgrade-Insecure-Requests "1"
 		header_down Content-Security-Policy "upgrade-insecure-requests"
 	}
