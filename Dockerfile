@@ -6,7 +6,7 @@ RUN caddy fmt --overwrite Caddyfile
 
 FROM listmonk/listmonk:latest
 
-ENV LISTMONK_app__address="127.0.0.1:9000"
+ENV LISTMONK_app__address="[::1]:9000"
 
 RUN apk add --no-cache parallel openssl
 

@@ -9,6 +9,9 @@
 	}
 	servers {
 		trusted_proxies static private_ranges # trust railway's proxy
+		listener_wrappers {
+			dual_stack
+		}
 	}
 }
 
