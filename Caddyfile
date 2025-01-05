@@ -6,6 +6,7 @@
 	log {
 		output stdout
 	}
+	trusted_proxies static private_ranges
 }
 
 (cors) {
@@ -37,10 +38,6 @@
 }
 
 :{$PORT} {
-	servers {
-		trusted_proxies static private_ranges
-	}
-
 	import cors {$ORIGIN_0}
 	import cors {$ORIGIN_1}
 	import cors {$ORIGIN_2}
